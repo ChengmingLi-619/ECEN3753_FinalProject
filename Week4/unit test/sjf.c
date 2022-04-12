@@ -30,6 +30,9 @@ void y_vel_calc(struct mass* ball, float time, int size);
 
 void x_pos_calc(struct mass* ball, float time,int size);
 void y_pos_calc(struct mass* ball, float time, int size);
+void boost(struct mass* ball, float percent_change, int size);
+void without_boost(struct mass* ball, float percent_change, int size);
+void find_accel(struct mass* ball, struct wall * wall, int size);
 
 void init(struct mass* ball, int* x_pos,int* y_pos,int*x_vel,int* y_vel,int* masses,int size){
     for(int i = 0; i< size; i++){
@@ -71,14 +74,34 @@ void y_vel_calc(struct mass* ball, float time,int size){
 
 void x_pos_calc(struct mass* ball, float time,int size){
     for(int i = 0; i< size; i++){
-        ball[i].x_init_pos = ball[i].x_init_pos + (ball[i].x_init_vel*time+0.5*ball[i].acceleration*time*time);
+        ball[i].x_init_pos = ball[i].x_init_pos + ball[i].x_init_vel*time;
+
 
     }
 
 }
 void y_pos_calc(struct mass* ball, float time ,int size){
     for(int i = 0; i< size; i++){
-        ball[i].y_init_pos = ball[i].y_init_pos + (ball[i].y_init_vel*time+0.5*ball[i].acceleration*time*time);
-                printf("The final velocity is %d\n", ball[i].y_init_pos);
+        ball[i].y_init_pos = ball[i].y_init_pos + ball[i].y_init_vel*time;
+    }
+}
+void boost(struct mass* ball, float percent_change, int size){
+       for(int i = 0; i< size; i++){
+        ball[i].x_init_vel = ball[i].x_init_vel*percent_change;
+        ball[i].y_init_vel = ball[i].y_init_vel*percent_change;
+
+
+    }
+}
+void without_boost(struct mass* ball, float percent_change, int size){
+       for(int i = 0; i< size; i++){
+        ball[i].x_init_vel = ball[i].x_init_vel*percent_change;
+        ball[i].y_init_vel = ball[i].y_init_vel*percent_change;
+        printf("x_vel is %d, y_vel is %d\n", ball[i].x_init_vel ,ball[i].y_init_vel);
+    }
+}
+void find_accel(struct mass* ball, struct wall * wall, int size){
+       for(int i = 0; i< size; i++){
+           ball[i].acceleration = wall[i].force/wall[i].mass;
     }
 }
