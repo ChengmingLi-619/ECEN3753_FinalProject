@@ -1,2 +1,0 @@
-# ECEN3753_FinalProject
-ECEN3753_FinalProject
